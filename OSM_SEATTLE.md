@@ -3,6 +3,7 @@
 Seattle, WA, United States
 
 https://www.openstreetmap.org/relation/237385
+
 https://mapzen.com/data/metro-extracts/metro/seattle_washington/ 
 
 I chose Seattle because I have always been intersted in it for its multicultural environment, special coffee culture and so on.
