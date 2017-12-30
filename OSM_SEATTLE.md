@@ -1,5 +1,5 @@
-#OpenStreetMap Data of Case Study
-##Map Area
+# OpenStreetMap Data of Case Study
+## Map Area
 Seattle, WA, United States
 
 https://www.openstreetmap.org/relation/237385
@@ -8,14 +8,14 @@ https://mapzen.com/data/metro-extracts/metro/seattle_washington/
 
 I chose Seattle because I have always been intersted in it for its multicultural environment, special coffee culture and so on.
 
-##Problems Encountered in the Map
+## Problems Encountered in the Map
 After checking the elements in the osm file, I found 4 problems:
 1. Overabbreviated street names
 2. Problematic postcode numbers
 3. Unabbreviated name type
 4. Ununified maxspeed format
 
-###Overabbreviated street names
+### Overabbreviated street names
 ```sql
 SELECT tags.value, COUNT(*) as count 
 FROM (SELECT * FROM nodes_tags 
@@ -43,7 +43,7 @@ def audit_street(street):
 	return street
 ```
 
-###Problematic postcode numbers
+### Problematic postcode numbers
 ```sql
 SELECT tags.value, COUNT(*) as count 
 FROM (SELECT * FROM nodes_tags 
@@ -86,7 +86,7 @@ def audit_postcode(postcode):
 
 ```
 
-###Unabbreviated name type
+### Unabbreviated name type
 ```sql
 SELECT ways_tags.key, ways_tags.value, COUNT(*) as count 
 FROM  ways_tags
@@ -119,7 +119,7 @@ def audit_nametype(nametype):
 	nametype = ';'.join(names)
 	return nametype
 ```
-###Ununified maxspeed format
+### Ununified maxspeed format
 ```sql
 SELECT ways_tags.key, ways_tags.value, COUNT(*) as count 
 FROM  ways_tags
@@ -154,10 +154,10 @@ def audit_maxspeed(speed):
 	speed = ' '.join(names)
 	return speed
 ``` 
-##Data Overview And Additional Ideas
+## Data Overview And Additional Ideas
 This sections includes basic information about the size of files and some 
 
-###File Sizes
+### File Sizes
 ```
 seattle_washington.osm     ...  1.63 GB
 seattle_washington.db      ... 935.7 MB
@@ -178,7 +178,7 @@ ways_tags_sample.csv       ...   645 KB
 
 
 ```
-###Number of Nodes
+### Number of Nodes
 ```sql
 SELECT COUNT(*) FROM nodes;
 ```
@@ -186,7 +186,7 @@ SELECT COUNT(*) FROM nodes;
 7301290
 ```
 
-###Number of Ways
+### Number of Ways
 ```sql
 SELECT COUNT(*) FROM ways;
 ```
@@ -194,7 +194,7 @@ SELECT COUNT(*) FROM ways;
 716561
 ```
 
-###Number of Unique Users
+### Number of Unique Users
 ```sql
 SELECT COUNT(DISTINCT(e.uid))          
 FROM (SELECT uid FROM nodes UNION ALL SELECT uid FROM ways) e;
@@ -203,7 +203,7 @@ FROM (SELECT uid FROM nodes UNION ALL SELECT uid FROM ways) e;
 3075
 ```
 
-###Top 10 Contributing Users
+### Top 10 Contributing Users
 ```sql
 SELECT e.user, COUNT(*) as num
 FROM (SELECT user FROM nodes UNION ALL SELECT user FROM ways) e
@@ -249,7 +249,7 @@ FROM
 ```
 Therefore, the top 10 cntributing users make up 4606275/8017850 = 57.450% of the whole data. 
 
-###Top 10 Sources
+### Top 10 Sources
 
 ```sql
 SELECT e.key, e.value, COUNT(*) as num
@@ -273,7 +273,7 @@ source,bing,12167
 ```
 Seems that lots of data are from 'King Country GIS;data.seattle.gov'.
 
-###The Specific Area of the Map 
+### The Specific Area of the Map 
 ```
 SELECT e.key, e.value, COUNT(*) as num
 FROM (SELECT key,value FROM nodes_tags UNION ALL SELECT key,value FROM ways_tags) e
@@ -296,7 +296,7 @@ city,"View Royal",1000
 ```
 Apparantly, the region of the map includes not only Seattle City, but also other cities. Therefore, the map contains the wide range of Seattle area.
 
-###Top 10 Appearing Cuisine
+### Top 10 Appearing Cuisine
 ```sql
 SELECT key, value, COUNT(*) as num
 FROM nodes_tags
@@ -394,7 +394,7 @@ ORDER BY num
 DESC;
 ```
 
-###Non-English Tags 
+### Non-English Tags 
 ```python
 def isEnglishString(s):
     for s_value in s.split(' '):
@@ -450,7 +450,7 @@ non_English tag number =  228
 According to the result, there are many non-English tags, making up 228/1076753 = 00.02117% of the total tags. The non-English tags contain languages like Chinese, Korean, Japanese, Russian etc. 
 Seattle is a very international area referring to the result. 
 
-###Suggestions
+### Suggestions
 
 By exploring the key value of the tags, I found that many of them indicate similar concepts. For instance, 'name', 'name_base', 'name_type' all contain the name information. According the 
 osm document on wiki(https://wiki.openstreetmap.org/wiki/TIGER_to_OSM_Attribute_Map#Feature_Name):
@@ -527,7 +527,7 @@ and create new 'fixme' tags, listing the problematic dictionary above.
 
 
 
-#Conclusion
+# Conclusion
 In general, the openstreetmap of Seattle is clean after auditing the data following the steps mentioned in this report. 
 By importing the data into sql and querying the results, I get information about Seattle area
 like cuisines, date when the data was created, amenities and so on. The tags show that Seattle is a multicultural and international area with many languages in use.
