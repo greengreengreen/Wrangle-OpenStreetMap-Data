@@ -7,3 +7,5 @@ Steps are as below: </br>
 • Created a relational database, defined its schema in SQLite and imported the audited map data into the database.<./br>
 
 • Queried the database in SQL and generated reports about local cuisines in Seattle.
+
+Check OSM_SEATTLE.md for details.
